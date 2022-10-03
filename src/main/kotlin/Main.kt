@@ -24,53 +24,46 @@ fun main(args: Array<String>) {
 fun simulacionTurno(sala1:Queue<Paciente>?,sala2:Queue<Paciente>?,sala3:Queue<Paciente>?){
     var medico1:Medico = Factorias.Medico("Traumatologia")
     var medico2:Medico = Factorias.Medico("Medicina interna")
+    println("Se encargan los medicos")
+    println(medico1.toString())
+    println(medico2.toString())
     for (i in 1..10){
         if (i%2 == 0){
-            agregarPaciente(sala1,sala2,sala3)
+            agregarPaciente(SeleccionarPaciente(sala1,sala2,sala3))
         }
         if (i%4 == 0){
-
+            tratarPaciente(SeleccionarPaciente(sala1,sala2,sala3),medico1,medico2)
         }
     }
 }
 
 
-//tratar paciente
 
-
-
-
-
-
-
-//añadir paciente
-fun agregarPaciente(sala1:Queue<Paciente>?,sala2:Queue<Paciente>?,sala3:Queue<Paciente>?){
+fun SeleccionarPaciente(sala1:Queue<Paciente>?,sala2:Queue<Paciente>?,sala3:Queue<Paciente>?):Queue<Paciente>{
     if(sala1!!.size == sala2!!.size && sala1!!.size == sala3!!.size){
         when((1..3).random()){
             1 -> {
-                ordenar(sala1)
+                return (sala1)
             }
             2 -> {
-                ordenar(sala2)
+                return (sala2)
             }
             3 -> {
-                ordenar(sala3)
+                return (sala3)
             }
         }
     }else{
         if (sala1!!.size < sala2!!.size && sala1!!.size < sala3!!.size){
-            ordenar(sala1)
+            return (sala1)
         }else{
             if (sala2!!.size < sala3!!.size){
-                ordenar(sala2)
-
-            }else{
-                ordenar(sala3)
+                return (sala2)
             }
         }
     }
+    return sala3
 }
-fun ordenar (sala:Queue<Paciente>){
+fun agregarPaciente (sala:Queue<Paciente>){
     var aux:Queue<Paciente> = LinkedList<Paciente>()
     var nuevaPersona:Paciente = Factorias.factoriaPaciente()
     var paciente:Paciente
@@ -93,5 +86,11 @@ fun ordenar (sala:Queue<Paciente>){
                 }
             }
         }
+    }
+}
+
+fun tratarPaciente(sala:Queue<Paciente>,medico1:Medico,medico2:Medico){
+    if (){
+
     }
 }
