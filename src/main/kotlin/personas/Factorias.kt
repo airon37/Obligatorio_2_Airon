@@ -32,7 +32,7 @@ object Factorias {
         return Pacien
     }
 
-    fun Medico(esceialidad:String):Medico{
+    fun Medico(especialidad:String):Medico{
         var nidi:Int = (1000..9999).random()
         var nombre:String = ""
         when((1..8).random()){
@@ -45,11 +45,7 @@ object Factorias {
             7 -> nombre = "Pablo"
             8 -> nombre = "Marta"
         }
-        var especialidad:String = ""
-        when ((1..2).random()){
-            1 -> "Traumatologia"
-            2 -> "Medicina interna"
-        }
+
         var nombreCompania1:String = ""
         when((1..3).random()){
             1 -> nombreCompania1 ="Sanitropres"

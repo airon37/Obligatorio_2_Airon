@@ -90,7 +90,25 @@ fun agregarPaciente (sala:Queue<Paciente>){
 }
 
 fun tratarPaciente(sala:Queue<Paciente>,medico1:Medico,medico2:Medico){
-    if (){
-
+    var paciente:Paciente = sala.remove()
+    if (paciente.nombreCompania == medico1.compania1 || paciente.nombreCompania == medico1.compania2 && curarEnfermedad(paciente,medico1)){
+        println("El paciente: "+paciente.toString()+" fue tratado por el medico: "+medico1.nombre)
+    }else{
+        if (paciente.nombreCompania == medico2.compania1 || paciente.nombreCompania == medico2.compania2 && curarEnfermedad(paciente,medico2)){
+            println("El paciente: "+paciente.toString()+" fue tratado por el medico: "+medico2.nombre)
+        }else{
+            println("El paciente: "+paciente.toString()+ "no pudo ser tratado")
+        }
     }
+
+
+}
+fun curarEnfermedad(paciente: Paciente,medico: Medico):Boolean{
+    if (paciente.tipoAtencion == "Quemadura laser" && medico.especialidad == "Traumatologia"){
+        return true
+    }
+    if (paciente.tipoAtencion == "Impacto chorritrónico" && medico.especialidad == "Medicina interna"){
+        return true
+    }
+    return false
 }
