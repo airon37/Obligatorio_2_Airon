@@ -4,10 +4,14 @@ import personas.Paciente
 import java.util.LinkedList
 import java.util.Queue
 
+
 fun main(args: Array<String>) {
     var sala1:Queue<Paciente> = LinkedList<Paciente>()
     var sala2:Queue<Paciente> = LinkedList<Paciente>()
     var sala3:Queue<Paciente> = LinkedList<Paciente>()
+    sala1.add(Factorias.factoriaPaciente())
+    sala2.add(Factorias.factoriaPaciente())
+    sala3.add(Factorias.factoriaPaciente())
     for (dia in 1..7){
         println("Este es el "+dia+" dia")
         for (turno in 1 ..3){
@@ -29,17 +33,40 @@ fun simulacionTurno(sala1:Queue<Paciente>?,sala2:Queue<Paciente>?,sala3:Queue<Pa
     println(medico2.toString())
     for (i in 1..10){
         if (i%2 == 0){
-            agregarPaciente(SeleccionarPaciente(sala1,sala2,sala3))
+            agregarPaciente(SeleccionarMenor(sala1,sala2,sala3))
         }
         if (i%4 == 0){
-            tratarPaciente(SeleccionarPaciente(sala1,sala2,sala3),medico1,medico2)
+            tratarPaciente(SeleccionarConmas(sala1,sala2,sala3),medico1,medico2)
         }
     }
 }
 
+fun SeleccionarConmas(sala1:Queue<Paciente>?,sala2:Queue<Paciente>?,sala3:Queue<Paciente>?):Queue<Paciente>{
+    if(sala1!!.size == sala2!!.size && sala1!!.size == sala3!!.size){
+        when((1..3).random()){
+            1 -> {
+                return (sala1)
+            }
+            2 -> {
+                return (sala2)
+            }
+            3 -> {
+                return (sala3)
+            }
+        }
+    }else{
+        if (sala1!!.size > sala2!!.size && sala1!!.size > sala3!!.size){
+            return (sala1)
+        }else{
+            if (sala2!!.size > sala3!!.size){
+                return (sala2)
+            }
+        }
+    }
+    return sala3
+}
 
-
-fun SeleccionarPaciente(sala1:Queue<Paciente>?,sala2:Queue<Paciente>?,sala3:Queue<Paciente>?):Queue<Paciente>{
+fun SeleccionarMenor(sala1:Queue<Paciente>?,sala2:Queue<Paciente>?,sala3:Queue<Paciente>?):Queue<Paciente>{
     if(sala1!!.size == sala2!!.size && sala1!!.size == sala3!!.size){
         when((1..3).random()){
             1 -> {
@@ -68,10 +95,10 @@ fun agregarPaciente (sala:Queue<Paciente>){
     var nuevaPersona:Paciente = Factorias.factoriaPaciente()
     var paciente:Paciente
     var estaDentro:Boolean = false
-    if (sala == null){
+    if (sala.isEmpty()){
         sala.add(nuevaPersona)
     }else{
-        while (sala !=null){
+        while (sala.isEmpty() == false){
             paciente = sala.remove()
             if (paciente.prioridad > nuevaPersona.prioridad && estaDentro == false){
                 aux.add(nuevaPersona)
@@ -100,8 +127,6 @@ fun tratarPaciente(sala:Queue<Paciente>,medico1:Medico,medico2:Medico){
             println("El paciente: "+paciente.toString()+ "no pudo ser tratado")
         }
     }
-
-
 }
 fun curarEnfermedad(paciente: Paciente,medico: Medico):Boolean{
     if (paciente.tipoAtencion == "Quemadura laser" && medico.especialidad == "Traumatologia"){
